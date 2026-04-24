@@ -1,9 +1,10 @@
+use leptos::config::LeptosOptions;
+use leptos::{component, view, IntoView};
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
-use leptos_router::{
-    components::{Route, Router, Routes},
-    StaticSegment,
-};
+use leptos_router::components::{Route, Router, Routes};
+use leptos_router::path;
+use crate::client::pages::{HomePage, PageNotFound};
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
@@ -25,37 +26,19 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
 
 #[component]
 pub fn App() -> impl IntoView {
-    // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
     view! {
-        // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/scamulator.css"/>
 
-        // sets the document title
         <Title text="Welcome to Leptos"/>
 
-        // content for this welcome page
         <Router>
             <main>
-                <Routes fallback=|| "Page not found.".into_view()>
-                    <Route path=StaticSegment("") view=HomePage/>
+                <Routes fallback=|| PageNotFound()>
+                    <Route path=path!("") view=HomePage/>
                 </Routes>
             </main>
         </Router>
-    }
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    let count = RwSignal::new(0);
-    let on_click = move |_| *count.write() += 1;
-
-    view! {
-        <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
     }
 }
