@@ -1,17 +1,25 @@
+#[cfg(feature = "ssr")]
 use std::sync::Arc;
+#[cfg(feature = "ssr")]
+use axum::Router;
+#[cfg(feature = "ssr")]
+use axum::routing::post;
+#[cfg(feature = "ssr")]
+use leptos::logging::log;
+#[cfg(feature = "ssr")]
+use leptos::prelude::*;
+#[cfg(feature = "ssr")]
+use leptos_axum::{generate_route_list, LeptosRoutes};
+#[cfg(feature = "ssr")]
+use scamulator::client::app::{shell, App};
+#[cfg(feature = "ssr")]
+use scamulator::server::calculate;
+#[cfg(feature = "ssr")]
 use scamulator::shared::AppState;
 
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-    use axum::Router;
-    use leptos::logging::log;
-    use leptos::prelude::*;
-    use leptos_axum::{generate_route_list, LeptosRoutes};
-    use scamulator::client::app::*;
-    use axum::routing::post;
-    use scamulator::server::calculate;
-
     let conf = get_configuration(None).unwrap();
     let addr = conf.leptos_options.site_addr;
     let leptos_options = conf.leptos_options;
