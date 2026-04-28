@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use crate::client::components::{Button, ButtonVariant};
 
 #[component]
 pub fn HomePage() -> impl IntoView {
@@ -8,5 +9,7 @@ pub fn HomePage() -> impl IntoView {
     view! {
         <h1>"Welcome to Leptos!"</h1>
         <button on:click=on_click>"Click Me: " {count}</button>
+
+        <Button>Default</Button>
     }
 }
